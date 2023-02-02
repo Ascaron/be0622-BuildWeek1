@@ -13,6 +13,7 @@ import javax.persistence.Query;
 
 import it.gestionebiglietti.model.Abbonamento;
 import it.gestionebiglietti.model.Tessera;
+import it.gestionemezzi.model.dao.GestioneMezziDAO;
 
 public class AbbonamentoDAO {
 	private static final String aziendaTrasporti = "BuildWeekBE1";
@@ -80,8 +81,9 @@ public class AbbonamentoDAO {
 			AziendaTrasportiDAO.funzionamento();
 		} else {
 			//AziendaTrasportiDAO.abbonamentoPerTratta(scanner);
-			System.out.println("HOLA HOLA HOLA");
+			//System.out.println("HOLA HOLA HOLA");
 			//SELEZIONA UNA TRATTA
+			GestioneMezziDAO.selectTratta();
 		}
 
 	}

@@ -8,11 +8,11 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://localhost:5432/poldo?useSSL=false" />
+				value="jdbc:postgresql://localhost:5432/provadb1?useSSL=false" />
 			<property name="javax.persistence.jdbc.user"
 				value="postgres" />
 			<property name="javax.persistence.jdbc.password"
-				value="CodAndrea" />
+				value="postgres" />
 
 			<property name="hibernate.default_schema" value="public" />
 			<property name="hibernate.dialect"

@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import it.gestionebiglietti.model.Biglietto;
+import it.gestionemezzi.model.dao.GestioneMezziDAO;
 
 public class BigliettoDAO {
 	
@@ -63,8 +64,9 @@ public class BigliettoDAO {
 			AziendaTrasportiDAO.funzionamento();
 		} else {
 			//AziendaTrasportiDAO.abbonamentoPerTratta(scanner);
-			System.out.println("MOOOOOOOSECA");
+			//System.out.println("MOOOOOOOSECA");
 			//SELEZIONA UNA TRATTA
+			GestioneMezziDAO.selectTratta();
 		}
 
 	}
