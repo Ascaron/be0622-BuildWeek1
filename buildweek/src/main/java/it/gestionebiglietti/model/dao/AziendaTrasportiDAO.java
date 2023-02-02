@@ -180,10 +180,6 @@ public class AziendaTrasportiDAO {
 		BigliettoDAO.controlloCodiceBiglietto(OggettoDaVidimareDAO.generaCodice());
 		BiglietteriaDAO.incrementoBiglietti(idBi);
 		AziendaTrasportiDAO.funzionamento();
-		/*System.out.println("");
-		System.out.println("Seleziona una tratta per il tuo biglietto");
-		System.out.println("");*/
-		//SELEZIONARE TRATTA
 	}
 	
 	//SECONDA SCELTA: ABBONAMENTO

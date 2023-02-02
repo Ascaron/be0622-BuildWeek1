@@ -17,6 +17,8 @@ import lombok.Setter;
 		+ "Biglietto c WHERE c.codUnivoco = :valore")
 @NamedQuery(name = "checkUtenteBiglietto", query = "SELECT b.codUnivoco FROM "
 		+ "Biglietto b WHERE b.codUnivoco = :valore")
+@NamedQuery(name = "recuperaIdBiglietto", query = "SELECT b.id FROM "
+		+ "Biglietto b WHERE b.codUnivoco = :valore")
 public class Biglietto extends OggettoDaVidimare{
 
 	public Biglietto(String codUnivoco){

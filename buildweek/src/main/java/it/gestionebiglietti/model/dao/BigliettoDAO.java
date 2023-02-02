@@ -13,7 +13,7 @@ import it.gestionebiglietti.model.Biglietto;
 import it.gestionemezzi.model.dao.GestioneMezziDAO;
 
 public class BigliettoDAO {
-	
+
 	private static final String aziendaTrasporti = "BuildWeekBE1";
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(aziendaTrasporti);
 	private static final EntityManager em = emf.createEntityManager();
@@ -22,26 +22,26 @@ public class BigliettoDAO {
 	public static void salvaBiglietto(String codice) {
 
 		try {
-			Biglietto biglietto=new Biglietto(codice);
+			Biglietto biglietto = new Biglietto(codice);
 
 			t.begin();
 			em.persist(biglietto);
 			t.commit();
-			System.out.println("Il tuo codice biglietto è "+ codice+" SALVALO");
+			System.out.println("Il tuo codice biglietto è " + codice + " SALVALO");
 
 		} catch (Exception e) {
 			System.out.println("Errore nell'inserimento del codice");
 		}
 
 	}
-	
+
 	public static void controlloCodiceBiglietto(String codice) {
 
 		Query q = em.createQuery("SELECT c.codUnivoco FROM OggettoDaVidimare c WHERE c.codUnivoco = :valore");
 		q.setParameter("valore", codice);
 
 		List<String> res = q.getResultList();
-		
+
 		if (res.isEmpty()) {
 			salvaBiglietto(codice);
 		} else {
@@ -49,7 +49,7 @@ public class BigliettoDAO {
 		}
 
 	}
-	
+
 	public static void checkUtenteBiglietto(String codice, Scanner scanner) {
 
 		Query q = em.createQuery("SELECT b.codUnivoco FROM Biglietto b WHERE b.codUnivoco = :valore");
@@ -63,12 +63,26 @@ public class BigliettoDAO {
 			System.out.println("");
 			AziendaTrasportiDAO.funzionamento();
 		} else {
-			//AziendaTrasportiDAO.abbonamentoPerTratta(scanner);
-			//System.out.println("MOOOOOOOSECA");
-			//SELEZIONA UNA TRATTA
-			GestioneMezziDAO.selectTratta();
+			GestioneMezziDAO.selectTratta(codice);
 		}
 
 	}
-	
+
+	public static void recuperaIdBiglietto(String codice) {
+		Query q = em.createQuery("SELECT b FROM Biglietto b WHERE b.codUnivoco = :valore");
+		q.setParameter("valore", codice);
+
+		Biglietto res = (Biglietto) q.getSingleResult();
+		eliminaBiglietto(res.getId(), codice);
+	}
+
+	public static void eliminaBiglietto(long id, String codice) {
+		t.begin();
+		Biglietto b = em.find(Biglietto.class, id);
+		em.remove(b);
+		t.commit();
+
+		System.out.println("Il biglietto con il codice " + codice + " è stato vidimato!");
+	}
+
 }

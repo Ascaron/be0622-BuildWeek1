@@ -80,10 +80,7 @@ public class AbbonamentoDAO {
 			System.out.println("");
 			AziendaTrasportiDAO.funzionamento();
 		} else {
-			//AziendaTrasportiDAO.abbonamentoPerTratta(scanner);
-			//System.out.println("HOLA HOLA HOLA");
-			//SELEZIONA UNA TRATTA
-			GestioneMezziDAO.selectTratta();
+			GestioneMezziDAO.selectTratta(codice);
 		}
 
 	}
