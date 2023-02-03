@@ -43,41 +43,5 @@ public class BiglietteriaDAO {
 		selezionaBiglietteriaDaId(valore).setAbbonamentiEmessi(ab);
 		t.commit();
 	}
-	
-	// ESEMPIO
-	
-	//SALVAUTENTE
-	public static void saveut(Utente object) {
-
-		try {
-			Utente l = object;
-
-			t.begin();
-			em.persist(l);
-			t.commit();
-
-			System.out.println("Libro inserito correttamente!");
-		} catch (Exception e) {
-			System.out.println("Errore nell'inserimento del libro");
-		}
-
-	}
-
-	//SALVATESSERA
-	public static void savetes(Tessera object) {
-
-		try {
-			Tessera l = object;
-
-			t.begin();
-			em.persist(l);
-			t.commit();
-
-			System.out.println("Libro inserito correttamente!");
-		} catch (Exception e) {
-			System.out.println("Errore nell'inserimento del libro");
-		}
-
-	}
 
 }

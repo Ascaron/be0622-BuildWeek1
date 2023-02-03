@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -58,21 +59,33 @@ public class AbbonamentoDAO {
 	}
 	
 	//CONTROLLA PRESENZA ABBONAMENTO NEL DB
-	public static void controlloPossessoAbbonamento(Scanner scanner){
+	public static void controlloPossessoAbbonamento(Scanner scanner, long idBi){
 		System.out.println("");
 		System.out.println("Inserisci il codice del tuo abbonamento");
 		System.out.println("");
-		String codice=scanner.nextLine();
-		checkUtenteAbbonamento(codice, scanner);
+		try {
+			String codice=scanner.nextLine();
+			checkUtenteAbbonamento(codice, scanner, idBi);
+		}
+		catch(NoResultException e) {
+			System.out.println("Abbonamento non trovato");
+			AziendaTrasportiDAO.funzionamento();
+		}
+
 		
 	}
 	
-	public static void checkUtenteAbbonamento(String codice, Scanner scanner) {
+	public static void checkUtenteAbbonamento(String codice, Scanner scanner, long idBi) {
 
 		Query q = em.createQuery("SELECT a.codUnivoco FROM Abbonamento a WHERE a.codUnivoco = :valore");
 		q.setParameter("valore", codice);
+		
+		Query q2 = em.createQuery("SELECT a FROM Abbonamento a WHERE a.codUnivoco = :valore");
+        q2.setParameter("valore", codice);
 
 		List<String> res = q.getResultList();
+        
+        Abbonamento a = (Abbonamento) q2.getSingleResult();
 
 		if (res.isEmpty()) {
 			System.out.println("");
@@ -80,7 +93,102 @@ public class AbbonamentoDAO {
 			System.out.println("");
 			AziendaTrasportiDAO.funzionamento();
 		} else {
-			GestioneMezziDAO.selectTratta(codice);
+			if(a.getDataScandenza().isBefore(LocalDate.now())) {
+                System.out.println();
+                System.out.println("Abbonamento " + a.getCodUnivoco() + " è scaduto il " + a.getDataScandenza() + "\nRinnovalo oppure acquistane un altro.");
+                System.out.println("");
+                rinnovaOcompra(scanner, idBi, a);
+            }else {
+                GestioneMezziDAO.selectTratta(codice);
+            }
+		}
+
+	}
+	
+	public static void checkValiditaAbbonamento(String codice, Scanner scanner, long idBi) {
+		Query q2 = em.createQuery("SELECT a FROM Abbonamento a WHERE a.codUnivoco = :valore");
+        q2.setParameter("valore", codice);
+        
+        Abbonamento a = (Abbonamento) q2.getSingleResult();
+        
+		if(a.getDataScandenza().isBefore(LocalDate.now())) {
+            System.out.println();
+            System.out.println("Abbonamento " + a.getCodUnivoco() + " è scaduto il "
+            		+ "" + a.getDataScandenza() + "\nRinnovalo oppure acquistane un altro.");
+            System.out.println("");
+            rinnovaOcompra(scanner, idBi, a);
+            
+        }else {
+        	System.out.println("");
+            System.out.println("Abbonamento "+ a.getCodUnivoco() +" è ancora valido e "
+            		+ "scadrà il "+ a.getDataScandenza());
+            System.out.println("");
+            AziendaTrasportiDAO.funzionamento();
+        }
+	}
+	
+	public static void rinnovaOcompra(Scanner scanner, long idBi, Abbonamento ab) {
+		System.out.println("DIGITA 1 PER RINNOVARE L'ABBONAMENTO\n"
+				+ "DIGITA 2 PER COMPRARNE UNO NUOVO\n"
+				+ "DIGITA 3 PER TORNARE ALL'INIZIO");
+		try {
+			int scelta=Integer.valueOf(scanner.nextLine());
+			if(scelta==1) {
+				rinnovoAbbonamento(ab, scanner);
+			}
+			else if(scelta==2) {
+				AziendaTrasportiDAO.acquistoAbbonamento(scanner, idBi);
+			}
+			else if(scelta==3) {
+				AziendaTrasportiDAO.funzionamento();
+			}
+			else {
+				System.out.println("Errore nella digitazione");
+				AziendaTrasportiDAO.funzionamento();
+			}
+		}
+		catch(NumberFormatException e) {
+			System.out.println("Errore nella digitazione");
+			AziendaTrasportiDAO.funzionamento();
+		}
+		
+	}
+	
+	public static void rinnovoAbbonamento(Abbonamento ab, Scanner scanner){
+		
+		System.out.println("");
+		System.out.println("DIGITA 1 PER RINNOVARE DI UNA SETTIMANA\n"
+				+ "DIGITA 2 PER RINNOVARE DI UN MESE");
+		try {
+			int scelta=Integer.valueOf(scanner.nextLine());
+			if(scelta==1) {
+				t.begin();
+				ab.setDataEmissione(LocalDate.now());
+				ab.setDataScandenza(LocalDate.now().plusWeeks(1));
+				t.commit();
+				System.out.println("");
+				System.out.println("Abbonamento rinnovato con successo");
+				System.out.println("");
+				AziendaTrasportiDAO.funzionamento();
+			}
+			else if(scelta==2) {
+				t.begin();
+				ab.setDataEmissione(LocalDate.now());
+				ab.setDataScandenza(LocalDate.now().plusMonths(1));
+				t.commit();
+				System.out.println("");
+				System.out.println("Abbonamento rinnovato con successo");
+				System.out.println("");
+				AziendaTrasportiDAO.funzionamento();
+			}
+			else {
+				System.out.println("Errore nella digitazione");
+				AziendaTrasportiDAO.funzionamento();
+			}
+		}
+		catch(NumberFormatException e) {
+			System.out.println("Errore nella digitazione");
+			AziendaTrasportiDAO.funzionamento();
 		}
 
 	}

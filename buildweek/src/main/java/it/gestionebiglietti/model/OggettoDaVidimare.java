@@ -28,14 +28,8 @@ public class OggettoDaVidimare {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String codUnivoco;
-	/*@ManyToOne
-	@JoinTable(name= "erogatoreservizi_servizioerogato",
-	joinColumns = {@JoinColumn(name="id_oggetto_da_vidimare", referencedColumnName = "id")},
-	inverseJoinColumns = {@JoinColumn(name="id_biglietteria", referencedColumnName = "id")})
-	private Biglietteria biglietteria;*/
 	
 	public OggettoDaVidimare(String codUnivoco) {
 		this.codUnivoco=codUnivoco;
-		//this.biglietteria=biglietteria;
 	}
 }

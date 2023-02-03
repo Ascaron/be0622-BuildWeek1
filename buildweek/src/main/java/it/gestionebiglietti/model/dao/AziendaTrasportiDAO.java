@@ -18,9 +18,9 @@ public class AziendaTrasportiDAO {
 		System.out.println("");
 		System.out.println("Quale operazione desideri effettuare?");
 		System.out.println("");
-		System.out.printf("DIGITA 1 PER RIVOLGERTI AD UN OPERATORE,%n"
-				+ "DIGITA 2 PER UTILIZZARE IL DISTRIBUTORE AUTOMATICO%n"
-				+ "DIGITA 3 PER USCIRE DALLA STAZIONE%n");
+		System.out.printf("DIGITA 1 PER RIVOLGERTI AD UN OPERATORE 👮,%n"
+				+ "DIGITA 2 PER UTILIZZARE IL DISTRIBUTORE AUTOMATICO 🛒%n"
+				+ "DIGITA 3 PER USCIRE DALLA STAZIONE 🚉%n");
 		try {
 			int scelta=Integer.valueOf(scanner.nextLine());
 			if(scelta==1) {
@@ -53,8 +53,9 @@ public class AziendaTrasportiDAO {
 		System.out.println("");
 		System.out.printf("DIGITA 1 PER ACQUISTARE UNA TESSERA VIP 💳%n"
 				+ "DIGITA 2 PER ACQUISTARE UN BIGLIETTO 🎫%n"
-				+ "DIGITA 3 PER ACQUISTARE UN' ABBONAMENTO 🎫%n"
-				+ "DIGITA 4 PER SELEZIONARE UN VIAGGIO 🏝️%n");
+				+ "DIGITA 3 PER CONTROLLARE IL TUO ABBONAMENTO 🎫%n"
+				+ "DIGITA 4 PER ACQUISTARE UN' ABBONAMENTO 🎫%n"
+				+ "DIGITA 5 PER SELEZIONARE UN VIAGGIO 🏝️%n");
 		int scelta=Integer.valueOf(scanner.nextLine());
 		switch(scelta) {
 		
@@ -67,11 +68,19 @@ public class AziendaTrasportiDAO {
 			break;
 			
 		case 3:
-			acquistoAbbonamento(scanner, idBi);
+			System.out.println("");
+			System.out.println("Inserisci il tuo codice abbonamento");
+			System.out.println("");
+			String codice= scanner.nextLine();
+			AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
 			break;
 			
 		case 4:
-			sceltaBigliettoAbbonamento(scanner);
+			acquistoAbbonamento(scanner, idBi);
+			break;
+			
+		case 5:
+			sceltaBigliettoAbbonamento(scanner, idBi);
 			break;
 			
 		default:
@@ -126,10 +135,11 @@ public class AziendaTrasportiDAO {
 		System.out.println("");
 		System.out.println("BENVENUTO");
 		System.out.println("");
-		System.out.printf("DIGITA 1 PER ACQUISTARE UNA TESSERA VIP%n"
-				+ "DIGITA 2 PER ACQUISTARE UN BIGLIETTO%n"
-				+ "DIGITA 3 PER ACQUISTARE UN' ABBONAMENTO%n"
-				+ "DIGITA 4 PER SELEZIONARE UN VIAGGIO%n");
+		System.out.printf("DIGITA 1 PER ACQUISTARE UNA TESSERA VIP 💳%n"
+				+ "DIGITA 2 PER ACQUISTARE UN BIGLIETTO 🎫%n"
+				+ "DIGITA 3 PER CONTROLLARE IL TUO ABBONAMENTO 🎫%n"
+				+ "DIGITA 4 PER ACQUISTARE UN' ABBONAMENTO 🎫%n"
+				+ "DIGITA 5 PER SELEZIONARE UN VIAGGIO 🏝️%n");
 		int scelta=Integer.valueOf(scanner.nextLine());
 		switch(scelta) {
 		
@@ -142,12 +152,19 @@ public class AziendaTrasportiDAO {
 			break;
 			
 		case 3:
-			acquistoAbbonamento(scanner, idBi);
+			System.out.println("");
+			System.out.println("Inserisci il tuo codice abbonamento");
+			System.out.println("");
+			String codice= scanner.nextLine();
+			AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
 			break;
 			
 		case 4:
-			sceltaBigliettoAbbonamento(scanner);
-			//seleziona una tratta
+			acquistoAbbonamento(scanner, idBi);
+			break;
+			
+		case 5:
+			sceltaBigliettoAbbonamento(scanner, idBi);
 			break;
 			
 		default:
@@ -171,7 +188,6 @@ public class AziendaTrasportiDAO {
 		int numTessera=TesseraDAO.generaNumTessera();
 		TesseraDAO.checkNumeroTessera(numTessera, utente);
 		AziendaTrasportiDAO.funzionamento();
-		//TesseraDAO.salvaTessera(utente);
 	}
 	
 	//SECONDA SCELTA: BIGLIETTO
@@ -225,11 +241,10 @@ public class AziendaTrasportiDAO {
 			System.out.println("Errore nella digitazione");
 			AziendaTrasportiDAO.funzionamento();
 		}
-		//SELEZIONARE TRATTA
 	}
 	
 	
-	public static void sceltaBigliettoAbbonamento(Scanner scanner) {
+	public static void sceltaBigliettoAbbonamento(Scanner scanner, long idBi) {
 		System.out.println("");
 		System.out.println("Hai un biglietto o un abbonamento?");
 		System.out.println("");
@@ -244,7 +259,7 @@ public class AziendaTrasportiDAO {
 			BigliettoDAO.checkUtenteBiglietto(codice, scanner);
 		}
 		else if(scelta==2) {
-			AbbonamentoDAO.controlloPossessoAbbonamento(scanner);
+			AbbonamentoDAO.controlloPossessoAbbonamento(scanner, idBi);
 		}
 		else {
 			System.out.println("Errore nella digitazione");

@@ -39,7 +39,7 @@ public class TesseraDAO {
 		}
 	}
 
-	// METODO DA FINIRE
+
 	public static void checkUtenteTessera(int numTessera, Scanner scanner, long idBi) {
 
 		Query q = em.createQuery("SELECT t.numTessera FROM Tessera t WHERE t.numTessera = :valore");
@@ -49,8 +49,9 @@ public class TesseraDAO {
 
 		if (res.isEmpty()) {
 			System.out.println("");
-			System.out.println("Non hai una tessera associata");
+			System.out.println("Non hai una tessera associata, acquistane una");
 			System.out.println("");
+			AziendaTrasportiDAO.funzionamento();
 		} else {
 			AziendaTrasportiDAO.abbonamentoSceltaTemporale(recuperaTessera(numTessera), scanner, idBi);
 		}

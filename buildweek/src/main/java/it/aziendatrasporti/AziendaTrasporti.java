@@ -232,9 +232,7 @@ public class AziendaTrasporti {
 		//PARTE DELLO SCANNER
 		System.out.println("Buongiorno, benvenuto in Flixbus");
 		AziendaTrasportiDAO.funzionamento();
-		
-		
-		
+			
 	}
 
 }
