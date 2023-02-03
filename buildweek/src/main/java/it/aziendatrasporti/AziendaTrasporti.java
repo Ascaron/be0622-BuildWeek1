@@ -38,45 +38,6 @@ public class AziendaTrasporti {
 	private static final EntityTransaction t = em.getTransaction();
 
 	public static void main(String[] args) {
-		
-		//ISTANZIO GLI OGGETTI
-		/*Utente ut1=new Utente("Mario", "Rossi");
-		BiglietteriaDAO.saveut(ut1);
-		
-		Tessera tes1=new Tessera();
-		tes1.setNumTessera(111);
-		tes1.setUtente(ut1);
-		tes1.setDataInizio(LocalDate.of(2022, 11, 10));
-		tes1.setDataFine(tes1.getDataInizio().plusYears(1));
-		BiglietteriaDAO.savetes(tes1);*/
-
-		/*Biglietto bo1=new Biglietto(UUID.randomUUID().toString(), rf1);
-		BigliettoDAO.salvaBiglietto(bo1);
-		
-		Biglietto bo2=new Biglietto(UUID.randomUUID().toString(), rf1);
-		BigliettoDAO.salvaBiglietto(bo2);
-		
-		Biglietto bo3=new Biglietto(UUID.randomUUID().toString(), da2);
-		BigliettoDAO.salvaBiglietto(bo3);
-		
-		Biglietto bo4=new Biglietto(UUID.randomUUID().toString(), da2);
-		BigliettoDAO.salvaBiglietto(bo4);
-		
-		Abbonamento ab1=new Abbonamento();
-		ab1.setBiglietteria(rf1);
-		ab1.setCodUnivoco(UUID.randomUUID().toString());
-		ab1.setDataEmissione(LocalDate.of(2022, 01, 01));
-		ab1.setDataScandenza(ab1.getDataEmissione().plusYears(1));
-		ab1.setTessera(tes1);
-		AbbonamentoDAO.salvaAbbonamento(ab1);
-		
-		Abbonamento ab2=new Abbonamento();
-		ab2.setBiglietteria(da2);
-		ab2.setCodUnivoco(UUID.randomUUID().toString());
-		ab2.setDataEmissione(LocalDate.of(2023, 11, 11));
-		ab2.setDataScandenza(ab1.getDataEmissione().plusYears(1));
-		ab2.setTessera(tes1);
-		AbbonamentoDAO.salvaAbbonamento(ab2);*/
 
 		Tratta como_bologna = new Tratta(Partenze.COMO, Arrivi.BOLOGNA, 2);
 		Tratta como_genova = new Tratta(Partenze.COMO, Arrivi.GENOVA, 3);

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.persistence.NoResultException;
+
 import it.gestionebiglietti.model.Tessera;
 import it.gestionebiglietti.model.Utente;
 
@@ -71,8 +73,14 @@ public class AziendaTrasportiDAO {
 			System.out.println("");
 			System.out.println("Inserisci il tuo codice abbonamento");
 			System.out.println("");
-			String codice= scanner.nextLine();
-			AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
+			try {
+				String codice= scanner.nextLine();
+				AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
+			}
+			catch(NoResultException e) {
+				System.out.println("Abbonamento non esistente");
+				AziendaTrasportiDAO.funzionamento();
+			}
 			break;
 			
 		case 4:
@@ -155,8 +163,14 @@ public class AziendaTrasportiDAO {
 			System.out.println("");
 			System.out.println("Inserisci il tuo codice abbonamento");
 			System.out.println("");
-			String codice= scanner.nextLine();
-			AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
+			try {
+				String codice= scanner.nextLine();
+				AbbonamentoDAO.checkValiditaAbbonamento(codice, scanner, idBi);
+			}
+			catch(NoResultException e) {
+				System.out.println("Abbonamento non esistente");
+				AziendaTrasportiDAO.funzionamento();
+			}
 			break;
 			
 		case 4:
